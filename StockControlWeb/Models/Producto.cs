@@ -12,18 +12,14 @@ namespace StockControlWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Categoria
+    public partial class Producto
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Categoria()
-        {
-            this.Producto = new HashSet<Producto>();
-        }
-    
-        public int CategoriaId { get; set; }
+        public int ProductoId { get; set; }
         public string Nombre { get; set; }
+        public decimal Precio { get; set; }
+        public int Cantidad { get; set; }
+        public int CategoriaId { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Producto> Producto { get; set; }
+        public virtual Categoria Categoria { get; set; }
     }
 }
