@@ -5,14 +5,14 @@
       <PropertyRef Name="CategoriaId" />
     </Key>
     <Property Name="CategoriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CategoriaName" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="Producto">
     <Key>
       <PropertyRef Name="ProductoId" />
     </Key>
     <Property Name="ProductoId" Type="int" Nullable="false" />
-    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductoName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Precio" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="Cantidad" Type="int" Nullable="false" />
     <Property Name="CategoriaId" Type="int" Nullable="false" />

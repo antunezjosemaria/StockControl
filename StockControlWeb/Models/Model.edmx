@@ -10,14 +10,14 @@
             <PropertyRef Name="CategoriaId" />
           </Key>
           <Property Name="CategoriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CategoriaName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="ProductoId" />
           </Key>
           <Property Name="ProductoId" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductoName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Precio" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Cantidad" Type="int" Nullable="false" />
           <Property Name="CategoriaId" Type="int" Nullable="false" />
@@ -46,28 +46,28 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="STOCKDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Categoria">
-          <Key>
-            <PropertyRef Name="CategoriaId" />
-          </Key>
-          <Property Name="CategoriaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Producto" Relationship="STOCKDBModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
-        </EntityType>
         <EntityContainer Name="STOCKDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Categoria" EntityType="STOCKDBModel.Categoria" />
           <EntitySet Name="Producto" EntityType="STOCKDBModel.Producto" />
           <AssociationSet Name="FK_Producto_Categoria" Association="STOCKDBModel.FK_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaId" />
+          </Key>
+          <Property Name="CategoriaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoriaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="STOCKDBModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
+        </EntityType>
         <EntityType Name="Producto">
           <Key>
             <PropertyRef Name="ProductoId" />
           </Key>
           <Property Name="ProductoId" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductoName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
           <Property Name="CategoriaId" Type="Int32" Nullable="false" />
@@ -94,8 +94,8 @@
           <EntitySetMapping Name="Categoria">
             <EntityTypeMapping TypeName="STOCKDBModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="CategoriaName" ColumnName="CategoriaName" />
                 <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -105,7 +105,7 @@
                 <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ProductoName" ColumnName="ProductoName" />
                 <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
               </MappingFragment>
             </EntityTypeMapping>

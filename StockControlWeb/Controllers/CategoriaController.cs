@@ -12,7 +12,7 @@ namespace StockControlWeb.Controllers
         STOCKDBEntities db = new STOCKDBEntities();
 
         public ActionResult Index()
-        {            
+        {
             return View();
         }
 
@@ -21,7 +21,7 @@ namespace StockControlWeb.Controllers
             List<CategoriaViewModel> CategoriaList = db.Categoria.Select(x => new CategoriaViewModel
             {
                 CategoriaId = x.CategoriaId,
-                Nombre = x.Nombre
+                CategoriaName = x.CategoriaName
             }).ToList();
 
             return Json(CategoriaList, JsonRequestBehavior.AllowGet);
@@ -49,14 +49,14 @@ namespace StockControlWeb.Controllers
                 if (model.CategoriaId > 0)
                 {
                     Categoria categoria = db.Categoria.SingleOrDefault(x => x.CategoriaId == model.CategoriaId);
-                    categoria.Nombre = model.Nombre;                    
+                    categoria.CategoriaName = model.CategoriaName;
                     db.SaveChanges();
                     result = true;
                 }
                 else
                 {
                     Categoria categoria = new Categoria();
-                    categoria.Nombre = model.Nombre;                    
+                    categoria.CategoriaName = model.CategoriaName;
                     db.Categoria.Add(categoria);
                     db.SaveChanges();
                     result = true;
@@ -67,7 +67,7 @@ namespace StockControlWeb.Controllers
                 throw ex;
             }
 
-            return Json(result, JsonRequestBehavior.AllowGet);            
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DeleteCategoria(int CategoriaId)

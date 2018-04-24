@@ -15,7 +15,7 @@ namespace StockControlWeb.Models
     public partial class Producto
     {
         public int ProductoId { get; set; }
-        public string Nombre { get; set; }
+        public string ProductoName { get; set; }
         public decimal Precio { get; set; }
         public int Cantidad { get; set; }
         public int CategoriaId { get; set; }

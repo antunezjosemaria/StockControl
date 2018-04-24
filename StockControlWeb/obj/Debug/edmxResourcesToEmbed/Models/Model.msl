@@ -4,8 +4,8 @@
     <EntitySetMapping Name="Categoria">
       <EntityTypeMapping TypeName="STOCKDBModel.Categoria">
         <MappingFragment StoreEntitySet="Categoria">
+          <ScalarProperty Name="CategoriaName" ColumnName="CategoriaName" />
           <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -15,7 +15,7 @@
           <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
           <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
           <ScalarProperty Name="Precio" ColumnName="Precio" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="ProductoName" ColumnName="ProductoName" />
           <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
         </MappingFragment>
       </EntityTypeMapping>

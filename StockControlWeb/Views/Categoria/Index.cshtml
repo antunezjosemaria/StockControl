@@ -35,7 +35,7 @@
                         <fieldset id="SubmitForm">
                             @Html.HiddenFor(m => m.CategoriaId, new { @id = "Id" })
                             <div class="form-group">
-                                @Html.TextBoxFor(m => m.Nombre, new { @id = "Nombre", @class = "form-control", @placeholder = "Nombre" })
+                                @Html.TextBoxFor(m => m.CategoriaName, new { @id = "Nombre", @class = "form-control", @placeholder = "Nombre" })
                             </div>                                                       
                             <div class="form-group">
                                 <a href="#" class="btn btn-block btn-danger" id="SaveCategoria">Guardar</a>
@@ -76,7 +76,7 @@
         for (var i = 0; i < CategoriaList.length; i++) {
             var Data = "<tr class='row_" + CategoriaList[i].CategoriaId + "'>" +
                 "<td>" + CategoriaList[i].CategoriaId + "</td>" +
-                "<td>" + CategoriaList[i].Nombre + "</td>" +                                
+                "<td>" + CategoriaList[i].CategoriaName + "</td>" +                                
                 "<td>" + "<a href='#' class='btn btn-primary' onclick='Edit(" + CategoriaList[i].CategoriaId + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
                 "<td>" + "<a href='#' class='btn btn-danger' onclick='Delete(" + CategoriaList[i].CategoriaId + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
                 "/tr>";
@@ -104,7 +104,7 @@
             success: function (data) {
                 var obj = JSON.parse(data);
                 $("#Id").val(obj.CategoriaId);
-                $("#Nombre").val(obj.Nombre);                
+                $("#Nombre").val(obj.CategoriaName);                
             }
         })
     }

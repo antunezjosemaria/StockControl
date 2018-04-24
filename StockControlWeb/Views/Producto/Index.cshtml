@@ -1,8 +1,155 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model StockControlWeb.Models.Producto
 
-<h2>Index</h2>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<div class="container" style="margin-top:3%">
+    <a href="#" class="btn btn-primary" onclick="AgregarProducto(0)">Agregar Producto </a> <br /> <br />
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr class="active">
+                    <th>Producto ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody id="SetProductoList">
+                <tr id="LoadingStatus" style="color:red"></tr>
+            </tbody>
+        </table>
+    </div>
 
+
+    @*Create a PopUp modal with registration form for add or edit Producto*@
+    <div class="modal fade" id="MyModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4 id="ModalTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(m => m.ProductoId, new { @id = "Id" })
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.ProductoName, new { @id = "Nombre", @class = "form-control", @placeholder = "Nombre" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Precio, new { @id = "Precio", @class = "form-control", @placeholder = "Precio" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Cantidad, new { @id = "Cantidad", @class = "form-control", @placeholder = "Cantidad" })
+                            </div>
+                            <div class="form-group">
+                                <a href="#" class="btn btn-block btn-danger" id="SaveProducto">Guardar</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Create a PopUp Modal for DeleteConfirmation*@
+
+    <div class="modal fade" id="DeleteConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Eliminar Producto</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Esta seguro que desea eliminar el Producto?.</h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary" data-dismiss="modal">Cancelar</a>
+                    <a href="#" class="btn btn-primary" onclick="ConfirmarDelete()">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#LoadingStatus").html("Loading...")
+    $.get("/Producto/GetProductoList", null, DataBind);
+    function DataBind(ProductoList) {
+        var setData = $("#SetProductoList");
+        for (var i = 0; i < ProductoList.length; i++) {
+            var Data = "<tr class='row_" + ProductoList[i].ProductoId + "'>" +
+                "<td>" + ProductoList[i].ProductoId + "</td>" +
+                "<td>" + ProductoList[i].ProductoName + "</td>" +
+                "<td>" + ProductoList[i].Precio + "</td>" +
+                "<td>" + ProductoList[i].Cantidad + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-primary' onclick='Edit(" + ProductoList[i].ProductoId + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-danger' onclick='Delete(" + ProductoList[i].ProductoId + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
+                "/tr>";
+
+            setData.append(Data);
+            $("#LoadingStatus").html(" ")
+        }
+    }
+
+    //Show the PopUp Modal for add new Producto
+    function AgregarProducto(ProductoId) {
+        $("#form")[0].reset();
+        $("#ModalTitle").html("Agregar Producto");
+        $("#MyModal").modal();
+    }
+
+    //Show the PopUp Modal for edir Producto Record
+    function Edit(ProductoId) {
+        var url = "/Producto/GetProductoById?ProductoId=" + ProductoId;
+        $("#ModalTitle").html("Actualizar Producto");
+        $("#MyModal").modal();
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#Id").val(obj.ProductoId);
+                $("#Nombre").val(obj.ProductoName);
+                $("#Precio").val(obj.Precio);
+                $("#Cantidad").val(obj.Cantidad);
+            }
+        })
+    }
+
+    $("#SaveProducto").click(function () {
+        var data = $("#SubmitForm").serialize();
+        $.ajax({
+            type: "Post",
+            url: "/Producto/SaveDataInDatabase",
+            data: data,
+            success: function (result) {
+                alert("Success!...");
+                window.location.href = "/Producto/index";
+                $("#MyModal").modal("hide");
+            }
+        })
+    })
+
+    //Show de PopUp Modal for DeleteConfermation
+    function Delete(ProductoId) {
+        $("#Id").val(ProductoId);
+        $("#DeleteConfirmation").modal("show");
+    }
+
+    function ConfirmarDelete() {
+        var ProductoId = $("#Id").val();
+        $.ajax({
+            type: "POST",
+            url: "/Producto/DeleteProducto?ProductoId=" + ProductoId,
+            success: function (result) {
+                $("#DeleteConfirmation").modal("hide");
+                $(".row_" + ProductoId).remove();
+            }
+        })
+    }
+</script>
