@@ -20,7 +20,7 @@ namespace StockControlWeb.Models
             this.Producto = new HashSet<Producto>();
         }
     
-        public int CategoriaId { get; set; }
+        public int IdCategoria { get; set; }
         public string CategoriaName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

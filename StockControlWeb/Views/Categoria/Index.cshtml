@@ -33,7 +33,7 @@
                 <div class="modal-body">
                     <form id="form">
                         <fieldset id="SubmitForm">
-                            @Html.HiddenFor(m => m.CategoriaId, new { @id = "Id" })
+                            @Html.HiddenFor(m => m.IdCategoria, new { @id = "Id" })
                             <div class="form-group">
                                 @Html.TextBoxFor(m => m.CategoriaName, new { @id = "Nombre", @class = "form-control", @placeholder = "Nombre" })
                             </div>                                                       
@@ -74,11 +74,11 @@
     function DataBind(CategoriaList) {
         var setData = $("#SetCategoriaList");
         for (var i = 0; i < CategoriaList.length; i++) {
-            var Data = "<tr class='row_" + CategoriaList[i].CategoriaId + "'>" +
-                "<td>" + CategoriaList[i].CategoriaId + "</td>" +
+            var Data = "<tr class='row_" + CategoriaList[i].IdCategoria + "'>" +
+                "<td>" + CategoriaList[i].IdCategoria + "</td>" +
                 "<td>" + CategoriaList[i].CategoriaName + "</td>" +                                
-                "<td>" + "<a href='#' class='btn btn-primary' onclick='Edit(" + CategoriaList[i].CategoriaId + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
-                "<td>" + "<a href='#' class='btn btn-danger' onclick='Delete(" + CategoriaList[i].CategoriaId + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-primary' onclick='Edit(" + CategoriaList[i].IdCategoria + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
+                "<td>" + "<a href='#' class='btn btn-danger' onclick='Delete(" + CategoriaList[i].IdCategoria + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
                 "/tr>";
 
             setData.append(Data);
@@ -87,15 +87,15 @@
     }
 
     //Show the PopUp Modal for add new Categoria
-    function AgregarCategoria(CategoriaId) {
+    function AgregarCategoria(IdCategoria) {
         $("#form")[0].reset();
         $("#ModalTitle").html("Agregar Categoria");
         $("#MyModal").modal();
     }
 
     //Show the PopUp Modal for edir Categoria Record
-    function Edit(CategoriaId) {
-        var url = "/Categoria/GetCategoriaById?CategoriaId=" + CategoriaId;
+    function Edit(IdCategoria) {
+        var url = "/Categoria/GetCategoriaById?IdCategoria=" + IdCategoria;
         $("#ModalTitle").html("Actualizar Categoria");
         $("#MyModal").modal();
         $.ajax({
@@ -103,7 +103,7 @@
             url: url,
             success: function (data) {
                 var obj = JSON.parse(data);
-                $("#Id").val(obj.CategoriaId);
+                $("#Id").val(obj.IdCategoria);
                 $("#Nombre").val(obj.CategoriaName);                
             }
         })
@@ -124,19 +124,19 @@
     })
 
     //Show de PopUp Modal for DeleteConfermation
-    function Delete(CategoriaId) {
-        $("#Id").val(CategoriaId);
+    function Delete(IdCategoria) {
+        $("#Id").val(IdCategoria);
         $("#DeleteConfirmation").modal("show");
     }
 
     function ConfirmarDelete() {
-        var CategoriaId = $("#Id").val();
+        var IdCategoria = $("#Id").val();
         $.ajax({
             type: "POST",
-            url: "/Categoria/DeleteCategoria?CategoriaId=" + CategoriaId,
+            url: "/Categoria/DeleteCategoria?IdCategoria=" + IdCategoria,
             success: function (result) {
                 $("#DeleteConfirmation").modal("hide");
-                $(".row_" + CategoriaId).remove();
+                $(".row_" + IdCategoria).remove();
             }
         })
     }

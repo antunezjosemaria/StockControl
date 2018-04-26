@@ -12,18 +12,9 @@ namespace StockControlWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Producto
+    public partial class Venta
     {
-        public int IdProducto { get; set; }
-        public int IdCategoria { get; set; }
-        public string Codigo { get; set; }
-        public string ProductoName { get; set; }
-        public decimal PrecioVenta { get; set; }
-        public string PrecioCompra { get; set; }
-        public int Cantidad { get; set; }
-        public Nullable<int> Activo { get; set; }
-        public Nullable<int> Stock { get; set; }
-    
-        public virtual Categoria Categoria { get; set; }
+        public int IdVenta { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
     }
 }

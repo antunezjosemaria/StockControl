@@ -20,16 +20,16 @@ namespace StockControlWeb.Controllers
         {
             List<CategoriaViewModel> CategoriaList = db.Categoria.Select(x => new CategoriaViewModel
             {
-                CategoriaId = x.CategoriaId,
+                IdCategoria = x.IdCategoria,
                 CategoriaName = x.CategoriaName
             }).ToList();
 
             return Json(CategoriaList, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCategoriaById(int CategoriaId)
+        public JsonResult GetCategoriaById(int IdCategoria)
         {
-            Categoria model = db.Categoria.Where(x => x.CategoriaId == CategoriaId).SingleOrDefault();
+            Categoria model = db.Categoria.Where(x => x.IdCategoria == IdCategoria).SingleOrDefault();
             string value = string.Empty;
             value = JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings
             {
@@ -46,9 +46,9 @@ namespace StockControlWeb.Controllers
             try
 
             {
-                if (model.CategoriaId > 0)
+                if (model.IdCategoria > 0)
                 {
-                    Categoria categoria = db.Categoria.SingleOrDefault(x => x.CategoriaId == model.CategoriaId);
+                    Categoria categoria = db.Categoria.SingleOrDefault(x => x.IdCategoria == model.IdCategoria);
                     categoria.CategoriaName = model.CategoriaName;
                     db.SaveChanges();
                     result = true;
@@ -70,11 +70,11 @@ namespace StockControlWeb.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DeleteCategoria(int CategoriaId)
+        public JsonResult DeleteCategoria(int IdCategoria)
         {
             bool result = false;
 
-            Categoria categoria = db.Categoria.SingleOrDefault(x => x.CategoriaId == CategoriaId);
+            Categoria categoria = db.Categoria.SingleOrDefault(x => x.IdCategoria == IdCategoria);
             if (categoria != null)
             {
                 db.Categoria.Remove(categoria);

@@ -5,18 +5,30 @@
       <EntityTypeMapping TypeName="STOCKDBModel.Categoria">
         <MappingFragment StoreEntitySet="Categoria">
           <ScalarProperty Name="CategoriaName" ColumnName="CategoriaName" />
-          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Producto">
       <EntityTypeMapping TypeName="STOCKDBModel.Producto">
         <MappingFragment StoreEntitySet="Producto">
-          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
           <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
           <ScalarProperty Name="ProductoName" ColumnName="ProductoName" />
-          <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Venta">
+      <EntityTypeMapping TypeName="STOCKDBModel.Venta">
+        <MappingFragment StoreEntitySet="Venta">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

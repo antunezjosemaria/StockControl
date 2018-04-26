@@ -7,36 +7,48 @@
     <Schema Namespace="STOCKDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categoria">
           <Key>
-            <PropertyRef Name="CategoriaId" />
+            <PropertyRef Name="IdCategoria" />
           </Key>
-          <Property Name="CategoriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoriaName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
-            <PropertyRef Name="ProductoId" />
+            <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="ProductoId" Type="int" Nullable="false" />
-          <Property Name="ProductoName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Precio" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" />
+          <Property Name="ProductoName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PrecioVenta" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="PrecioCompra" Type="varchar" MaxLength="50" />
           <Property Name="Cantidad" Type="int" Nullable="false" />
-          <Property Name="CategoriaId" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="int" />
+          <Property Name="Stock" Type="int" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="IdVenta" />
+          </Key>
+          <Property Name="IdVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
         </EntityType>
         <Association Name="FK_Producto_Categoria">
           <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
           <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categoria">
-              <PropertyRef Name="CategoriaId" />
+              <PropertyRef Name="IdCategoria" />
             </Principal>
             <Dependent Role="Producto">
-              <PropertyRef Name="CategoriaId" />
+              <PropertyRef Name="IdCategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="STOCKDBModelStoreContainer">
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Producto_Categoria" Association="Self.FK_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
@@ -49,6 +61,7 @@
         <EntityContainer Name="STOCKDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categoria" EntityType="STOCKDBModel.Categoria" />
           <EntitySet Name="Producto" EntityType="STOCKDBModel.Producto" />
+          <EntitySet Name="Venta" EntityType="STOCKDBModel.Venta" />
           <AssociationSet Name="FK_Producto_Categoria" Association="STOCKDBModel.FK_Producto_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
             <End Role="Producto" EntitySet="Producto" />
@@ -56,36 +69,47 @@
         </EntityContainer>
         <EntityType Name="Categoria">
           <Key>
-            <PropertyRef Name="CategoriaId" />
+            <PropertyRef Name="IdCategoria" />
           </Key>
-          <Property Name="CategoriaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoriaName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Producto" Relationship="STOCKDBModel.FK_Producto_Categoria" FromRole="Categoria" ToRole="Producto" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
-            <PropertyRef Name="ProductoId" />
+            <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="ProductoId" Type="Int32" Nullable="false" />
-          <Property Name="ProductoName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductoName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrecioVenta" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="PrecioCompra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Cantidad" Type="Int32" Nullable="false" />
-          <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Int32" />
+          <Property Name="Stock" Type="Int32" />
           <NavigationProperty Name="Categoria" Relationship="STOCKDBModel.FK_Producto_Categoria" FromRole="Producto" ToRole="Categoria" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="IdVenta" />
+          </Key>
+          <Property Name="IdVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Producto_Categoria">
           <End Type="STOCKDBModel.Categoria" Role="Categoria" Multiplicity="1" />
           <End Type="STOCKDBModel.Producto" Role="Producto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categoria">
-              <PropertyRef Name="CategoriaId" />
+              <PropertyRef Name="IdCategoria" />
             </Principal>
             <Dependent Role="Producto">
-              <PropertyRef Name="CategoriaId" />
+              <PropertyRef Name="IdCategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -95,18 +119,30 @@
             <EntityTypeMapping TypeName="STOCKDBModel.Categoria">
               <MappingFragment StoreEntitySet="Categoria">
                 <ScalarProperty Name="CategoriaName" ColumnName="CategoriaName" />
-                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="STOCKDBModel.Producto">
               <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="PrecioCompra" ColumnName="PrecioCompra" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
                 <ScalarProperty Name="ProductoName" ColumnName="ProductoName" />
-                <ScalarProperty Name="ProductoId" ColumnName="ProductoId" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venta">
+            <EntityTypeMapping TypeName="STOCKDBModel.Venta">
+              <MappingFragment StoreEntitySet="Venta">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

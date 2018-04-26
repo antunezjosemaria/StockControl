@@ -5,8 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b7fa8234306f4336aebd01b01530aae6" Name="Diagram1">
-        <EntityTypeShape EntityType="STOCKDBModel.Categoria" Width="1.5" PointX="0.75" PointY="1.25" />
-        <EntityTypeShape EntityType="STOCKDBModel.Producto" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="STOCKDBModel.Categoria" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="STOCKDBModel.Producto" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="STOCKDBModel.Venta" Width="1.5" PointX="0.75" PointY="4.75" />
         <AssociationConnector Association="STOCKDBModel.FK_Producto_Categoria" />
       </Diagram>
     </edmx:Diagrams>
