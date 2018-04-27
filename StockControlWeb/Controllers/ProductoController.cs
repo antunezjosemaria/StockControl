@@ -14,7 +14,7 @@ namespace StockControlWeb.Controllers
         public ActionResult Index()
         {
             List<Producto> DepList = db.Producto.ToList();
-            ViewBag.ListOfDepartament = new SelectList(DepList, "CategoriaId", "Nombre");
+            ViewBag.ListOfDepartament = new SelectList(DepList, "IdCategoria", "Nombre");
 
             return View();
         }
@@ -24,13 +24,14 @@ namespace StockControlWeb.Controllers
             List<ProductoViewModel> ProductoList = db.Producto.Select(x => new ProductoViewModel
             {
                 IdProducto = x.IdProducto,
+                Codigo = x.Codigo,
                 ProductoName = x.ProductoName,
                 PrecioVenta = x.PrecioVenta,
+                //PrecioCompra = x.PrecioCompra,
                 Cantidad = x.Cantidad,
-                CategoriaName = x.Categoria.CategoriaName
-
+                //CategoriaName = x.Categoria.CategoriaName
+                Stock = x.Stock
             }).ToList();
-
 
             return Json(ProductoList, JsonRequestBehavior.AllowGet);
         }
@@ -57,25 +58,25 @@ namespace StockControlWeb.Controllers
                 if (model.IdProducto > 0)
                 {
                     Producto producto = db.Producto.SingleOrDefault(x => x.Activo == 0 && x.IdProducto == model.IdProducto);
-                    producto.ProductoName = model.ProductoName;
                     //producto.Codigo = model.Codigo;
+                    producto.ProductoName = model.ProductoName;
                     producto.PrecioVenta = model.PrecioVenta;
                     //producto.PrecioCompra = model.PrecioCompra;
                     producto.Cantidad = model.Cantidad;
-                    producto.Stock = model.Stock;                    
+                    producto.Stock = model.Stock;
                     db.SaveChanges();
                     result = true;
                 }
                 else
                 {
                     Producto producto = new Producto();
+                    producto.Codigo = model.Codigo;
                     producto.ProductoName = model.ProductoName;
-                    //producto.Codigo = model.Codigo;
                     producto.PrecioVenta = model.PrecioVenta;
                     //producto.PrecioCompra = model.PrecioCompra;
                     producto.Cantidad = model.Cantidad;
+                    producto.Activo = 1;
                     producto.Stock = model.Stock;
-                    producto.Activo = 0;
                     db.Producto.Add(producto);
                     db.SaveChanges();
                     result = true;
