@@ -13,8 +13,8 @@ namespace StockControlWeb.Controllers
 
         public ActionResult Index()
         {
-            List<Producto> DepList = db.Producto.ToList();
-            ViewBag.ListOfDepartament = new SelectList(DepList, "IdCategoria", "Nombre");
+            List<Categoria> DepList = db.Categoria.ToList();
+            ViewBag.ListCategoria = new SelectList(DepList, "IdCategoria", "CategoriaName");
 
             return View();
         }
@@ -29,7 +29,7 @@ namespace StockControlWeb.Controllers
                 PrecioVenta = x.PrecioVenta,
                 //PrecioCompra = x.PrecioCompra,
                 Cantidad = x.Cantidad,
-                //CategoriaName = x.Categoria.CategoriaName
+                //CategoriaName = x.Categoria.CategoriaName,
                 Stock = x.Stock
             }).ToList();
 
@@ -58,7 +58,7 @@ namespace StockControlWeb.Controllers
                 if (model.IdProducto > 0)
                 {
                     Producto producto = db.Producto.SingleOrDefault(x => x.Activo == 0 && x.IdProducto == model.IdProducto);
-                    //producto.Codigo = model.Codigo;
+                    producto.Codigo = model.Codigo;
                     producto.ProductoName = model.ProductoName;
                     producto.PrecioVenta = model.PrecioVenta;
                     //producto.PrecioCompra = model.PrecioCompra;
@@ -77,6 +77,7 @@ namespace StockControlWeb.Controllers
                     producto.Cantidad = model.Cantidad;
                     producto.Activo = 1;
                     producto.Stock = model.Stock;
+                    producto.IdCategoria = model.IdCategoria;
                     db.Producto.Add(producto);
                     db.SaveChanges();
                     result = true;

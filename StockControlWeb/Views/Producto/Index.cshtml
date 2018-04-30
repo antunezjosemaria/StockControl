@@ -40,8 +40,8 @@
                         <fieldset id="SubmitForm">
                             @Html.HiddenFor(m => m.IdProducto, new { @id = "Id" })
                             <div class="form-group">
-                                    @Html.TextBoxFor(m => m.Codigo, new { @id = "Codigo", @class = "form-control", @placeholder = "Codigo" })
-                                </div>
+                                @Html.TextBoxFor(m => m.Codigo, new { @id = "Codigo", @class = "form-control", @placeholder = "Codigo" })
+                            </div>
                             <div class="form-group">
                                 @Html.TextBoxFor(m => m.ProductoName, new { @id = "Nombre", @class = "form-control", @placeholder = "Nombre" })
                             </div>
@@ -49,13 +49,16 @@
                                 @Html.TextBoxFor(m => m.PrecioVenta, new { @id = "PrecioVenta", @class = "form-control", @placeholder = "Precio Venta" })
                             </div>
                             @*<div class="form-group">
-                                @Html.TextBoxFor(m => m.PrecioCompra, new { @id = "PrecioCompra", @class = "form-control", @placeholder = "Precio Compra" })
-                            </div>*@
+                                    @Html.TextBoxFor(m => m.PrecioCompra, new { @id = "PrecioCompra", @class = "form-control", @placeholder = "Precio Compra" })
+                                </div>*@
                             <div class="form-group">
                                 @Html.TextBoxFor(m => m.Cantidad, new { @id = "Cantidad", @class = "form-control", @placeholder = "Cantidad" })
                             </div>
                             <div class="form-group">
                                 @Html.TextBoxFor(m => m.Stock, new { @id = "Stock", @class = "form-control", @placeholder = "Stock" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(m => m.IdCategoria, ViewBag.ListCategoria as SelectList, "--Select Categoria--", new { @id = "DropDown", @class = "form-control" })
                             </div>
                             <div class="form-group">
                                 <a href="#" class="btn btn-block btn-danger" id="SaveProducto">Guardar</a>
@@ -102,6 +105,7 @@
                 //"<td>" + ProductoList[i].PrecioCompra + "</td>" +
                 "<td>" + ProductoList[i].Cantidad + "</td>" +
                 "<td>" + ProductoList[i].Stock + "</td>" +
+                //"<td>" + ProductoList[i].CategoriaName + "</td>" +
                 "<td>" + "<a href='#' class='btn btn-primary' onclick='Edit(" + ProductoList[i].IdProducto + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
                 "<td>" + "<a href='#' class='btn btn-danger' onclick='Delete(" + ProductoList[i].IdProducto + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
                 "/tr>";
@@ -135,6 +139,8 @@
                 //$("#PrecioCompra").val(obj.PrecioCompra);
                 $("#Cantidad").val(obj.Cantidad);
                 $("#Stock").val(obj.Stock);
+                $("#DropDown option:selected").text(obj.Categoria.CategoriaName);
+                $("#DropDown option:selected").val(obj.IdCategoria);
             }
         })
     }
